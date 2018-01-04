@@ -6,12 +6,11 @@ Sample application build to perform CRUD operations, send out mails using nodema
 	AngularJs 1.5
 
 ## Getting started
-	Clone the repository and navigate to folder using terminal
-	Run
+Clone the repository and navigate to folder using terminal and type the following to start application
 	```
 	npn run start
 	```
-	This will initialize application using Sqllite by defalut, unless you want to point to any db, set the path for following variables and start the application
+This will initialize application using Sqllite by defalut, unless you want to point to any db, set the path for following variables and start the application
 	CLIENT(mysql/postgress/oracle), HOST, USER(DB User), PASSWORD(DB passwrd), DEBUG(true/false)
 
 
