@@ -1,0 +1,161 @@
+<div class="col-md-12">
+    <div class="row ">
+        <div class="col-md-4">
+            <form name="contractorDetailsForm" class="form-horizontal" novalidate>
+                <div class="col-md-12">
+                    <div class="form-group" ng-class="{'has-error': contractorDetailsForm.nameOfFirm.$invalid && (contractorDetailsForm.nameOfFirm.$dirty || isSubmitted)}">
+                        <label for="nameOfFirm">Name of Firm*</label>
+                        <input type="text" class="form-control" id="nameOfFirm" name="nameOfFirm" ng-model="contractor.nameOfFirm" required/>
+                        <span class="help-block form-hint"
+                              ng-show="contractorDetailsForm.nameOfFirm.$invalid && (contractorDetailsForm.nameOfFirm.$dirty || isSubmitted)">
+                            <span>Firm Name is required</span>
+                        </span>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': contractorDetailsForm.emailId.$invalid && (contractorDetailsForm.emailId.$dirty || isSubmitted)}">
+                        <label for="emailId">Email Id*</label>
+                        <input type="text" class="form-control" id="emailId" name="emailId" ng-model="contractor.emailId" ng-blur="validate('emailId', contractor.emailId);" required/>
+                        <span class="help-block form-hint"
+                              ng-show="contractorDetailsForm.emailId.$invalid && (contractorDetailsForm.emailId.$dirty || isSubmitted)">
+                            <div ng-repeat="(errorType, value) in contractorDetailsForm.emailId.$error">
+                                <span ng-if="errorType==='required'">Email id is required</span>
+                                <span ng-if="errorType==='conflict'">Company already registered with this emailId</span>
+                            </div>    
+                        </span>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': contractorDetailsForm.mesRegistrationNumber.$invalid && (contractorDetailsForm.mesRegistrationNumber.$dirty || isSubmitted)}">
+                        <label for="mesRegistrationNumber">Registration Number*</label>
+                        <input type="text" class="form-control" id="mesRegistrationNumber" name="mesRegistrationNumber" ng-model="contractor.mesRegistrationNumber" ng-blur="validate('mesRegistrationNumber', contractor.mesRegistrationNumber);" required/>
+                        <span class="help-block form-hint"
+                              ng-show="contractorDetailsForm.mesRegistrationNumber.$invalid && (contractorDetailsForm.mesRegistrationNumber.$dirty || isSubmitted)">
+                              <div ng-repeat="(errorType, value) in contractorDetailsForm.mesRegistrationNumber.$error">
+                                <span ng-if="errorType==='required'">Registration Number is required</span>
+                                <span ng-if="errorType==='conflict'">Company already registered with registration Id</span>
+                            </div>
+                        </span>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': contractorDetailsForm.contactNumber.$invalid && (contractorDetailsForm.contactNumber.$dirty || isSubmitted)}">
+                        <label for="contactNumber">Contact Number</label>
+                        <input type="text" class="form-control" id="contactNumber" name="contactNumber" ng-model="contractor.contactNumber"/>
+                        <span class="help-block form-hint"
+                              ng-show="contractorDetailsForm.contactNumber.$invalid && (contractorDetailsForm.contactNumber.$dirty || isSubmitted)">
+                            <span>Contact number is required</span>
+                        </span>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': contractorDetailsForm.alternateNumber.$invalid && (contractorDetailsForm.alternateNumber.$dirty || isSubmitted)}">
+                        <label for="alternateNumber">Alternate Number</label>
+                        <input type="text" class="form-control" id="alternateNumber" name="alternateNumber" ng-model="contractor.alternateNumber"/>
+                        <span class="help-block form-hint"
+                              ng-show="contractorDetailsForm.alternateNumber.$invalid && (contractorDetailsForm.alternateNumber.$dirty || isSubmitted)">
+                            <span>Alternate number is required</span>
+                        </span>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': contractorDetailsForm.city.$invalid && (contractorDetailsForm.city.$dirty || isSubmitted)}">
+                        <label for="city">City</label>
+                        <input type="text" class="form-control" id="city" name="city" ng-model="contractor.city"/>
+                        <span class="help-block form-hint"
+                              ng-show="contractorDetailsForm.city.$invalid && (contractorDetailsForm.city.$dirty || isSubmitted)">
+                            <span>City is required</span>
+                        </span>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': contractorDetailsForm.state.$invalid && (contractorDetailsForm.state.$dirty || isSubmitted)}">
+                        <label for="state">State</label>
+                        <input type="text" class="form-control" id="state" name="state" ng-model="contractor.state"/>
+                        <span class="help-block form-hint"
+                              ng-show="contractorDetailsForm.state.$invalid && (contractorDetailsForm.state.$dirty || isSubmitted)">
+                            <span>State is required</span>
+                        </span>
+                    </div>
+                    <div class="form-group" ng-class="{'has-error': contractorDetailsForm.address.$invalid && (contractorDetailsForm.address.$dirty || isSubmitted)}">
+                        <label for="address">Address</label>
+                        <textarea type="text" class="form-control" id="address" name="address" ng-model="contractor.address"></textarea>
+                        <span class="help-block form-hint"
+                              ng-show="contractorDetailsForm.address.$invalid && (contractorDetailsForm.address.$dirty || isSubmitted)">
+                            <span>Address is required</span>
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-6">
+                            <button class="btn btn-default" type="button" ng-click="cancel();">Cancel</button>
+                            <button class="btn btn-primary" type="button" ng-click="save();">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-8">
+            <h1>Contractor Details</h1>
+            <div class="row">
+                <div class="col-md-8 custom-pagination">
+                    <div class="col-md-offset-3 col-md-3">
+                        <div type="button" class="btn btn-default dropdown-toggle pagination-btn">
+                            <a href="" ng-class="{'active': query.page != 1}" ng-click="gotoPage(query.page - 1);">
+                                &#x025C4;&ensp;</a>
+                            <span>{{query.page}} of {{totalPages}} </span>
+                            <a href="" ng-class="{'active': query.page < totalPages}"
+                               ng-click="gotoPage(query.page + 1);">&ensp;&#x025BA;</a>
+                        </div>
+                    </div>
+                    <div class="leftmargin width-inline">
+                        show
+                    </div>
+                    <div class="width-inline">
+                        <div class="btn-group btn-input">
+                            <button type="button" class="btn btn-default dropdown-toggle page-btn"
+                                    data-toggle="dropdown">
+                                <span data-bind="label">{{query.pageSize}}</span> <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li ng-repeat="pageSize in pageSizes" ng-click="resetPageSize(pageSize)">
+                                    <a>{{pageSize}}</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="width-inline"> of {{totalRecords}}
+                        <span ng-show="totalRecords > 1">results</span>
+                        <span ng-show="totalRecords == 1">result</span>
+                    </div>
+                </div>
+                <div class="col-md-4 inner-addon right-addon typeahead">
+                    <i class="glyphicon glyphicon-search"></i>
+                    <input type="text" ng-model="contractorSearchText" placeholder="Name / emailId/ registration no."
+                           uib-typeahead="contractor.displayName for contractor in searchForContractor($viewValue)"
+                           typeahead-on-select="selectedContractor($item, $model, $label, $event)"
+                           typeahead-loading="loading"
+                           typeahead-no-results="noResults" class="form-control">
+                    <div ng-show="noResults">No Results Found</div>
+                </div>
+            </div>
+            <div class="row table-container">
+                <table class="table data-table">
+                    <thead>
+                    <tr>
+                        <th ng-repeat="field in contractorFields">
+                            <span ng-hide="field.isSortable" ng-class="{'cursor-default' : (false === field.isSortable) }">{{field.displayName}}&nbsp;</span>
+                            <a ng-show="field.isSortable"
+                            ng-click="reverse=!reverse; order(field.name, reverse);">{{field.displayName}}&nbsp;<span
+                                ng-show="query.sort == field.name && reverse">&#9660;</span><span
+                                ng-show="query.sort == field.name && !reverse">&#9650;</span></a>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr  ng-repeat="contractor in contractors track by $index">
+                        <td><a href="javascript:void(0);" ng-click="editContractor(contractor);">{{contractor.id}}</a></td>
+                        <td>{{contractor.nameOfFirm}}</td>
+                        <td>{{contractor.emailId}}</td>
+                        <td>{{contractor.contactNumber}}</td>
+                        <td>{{contractor.alternateNumber}}</td>
+                        <td>{{contractor.city}}</td>
+                        <td>{{contractor.state}}</td>
+                        <td>{{contractor.address}}</td>
+                        <td>{{contractor.mesRegistrationNumber}}</td>
+                    </tr>
+                    <tr ng-if="!contractors.length">
+                        <td colspan="4">No record found</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

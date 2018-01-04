@@ -5,10 +5,12 @@ npm-debug.log*
 
 # Dependency directories
 node_modules/
+.idea/
 
 
 # Optional eslint cache
 .eslintcache
+package-lock.json
 
 
 # dotenv environment variables file
