@@ -1,0 +1,325 @@
+.page-header {
+    border-bottom: none;
+}
+
+.navbar {
+    margin-bottom: 20px;
+}
+
+.navbar-default {
+    background-color: #337ab7;
+    border-color: #337ab7;
+}
+
+.navbar > .container .navbar-brand, .navbar > .container-fluid .navbar-brand {
+    margin-left: 0px;
+}
+
+.navbar-default .navbar-brand, .navbar-default .navbar-nav > li > a {
+    color: #fff;
+    font-weight: 400;
+    font-size: 20px;
+}
+
+.navbar-nav > li:hover, .navbar-nav > li:focus {
+    background-color: lightcoral;
+}
+
+.table-wrapper {
+    overflow: auto;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.cursor-default {
+    cursor: default;
+}
+
+.bottom {
+    margin-bottom: 20px;
+}
+
+table.data-table > thead > tr > th,
+table.data-table > tbody > tr > td {
+    min-width: 150px;
+}
+
+table.data-table > thead > tr > th:nth-child(1),
+table.data-table > thead > tr > th:nth-child(5),
+table.data-table > tbody > tr > td:nth-child(1),
+table.data-table > tbody > tr > td:nth-child(2),
+table.data-table > tbody > tr > td:nth-child(4),
+table.data-table > tbody > tr > td:nth-child(5),
+table.data-table > tbody > tr > td:nth-child(6) {
+    min-width: 100px;
+}
+
+table.data-table > thead > tr > th:nth-child(2),
+table.data-table > thead > tr > th:nth-child(4),
+table.data-table > thead > tr > th:nth-child(10),
+table.data-table > thead > tr > th:nth-child(12) {
+    min-width: 195px;
+}
+
+.form-inline .form-group {
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 100%;
+}
+
+.table-container {
+    overflow: auto;
+}
+
+.firstrow {
+    margin: 60px 0px;
+}
+
+.leftmargin {
+    margin-left: 30px;
+}
+
+.form-inline .form-control {
+    width: 100%;
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: #cccccc;
+}
+
+.has-error {
+
+}
+
+.has-error .form-control {
+    border: 2px solid #d0564b !important;
+    box-shadow: none;
+}
+
+.has-error .form-control:focus {
+    box-shadow: none;
+}
+
+.form-hint {
+    border-radius: 6px;
+    font-size: 16px;
+    padding: 5px;
+    font-weight: 400;
+    z-index: 10;
+    white-space: inherit;
+    max-width: 100%;
+    min-width: 150px;
+    border: 2px solid #d0564b;
+    margin-bottom: 0px;
+}
+
+.form-hint {
+    background: none repeat scroll 0 0 #e7aaa5;
+    color: #ffffff !important;
+}
+
+.vcenter {
+    padding-top: 8px;
+}
+
+.custom-pagination > a.active {
+    color: lightcoral;
+}
+
+.custom-pagination a:hover, .custom-pagination a:focus {
+    text-decoration: none;
+    color: #d0564b;
+}
+.custom-pagination .pagination-btn:hover, .custom-pagination .pagination-btn:hover{
+    background-color: transparent;
+}
+
+.width-inline {
+    display: inline-block;
+}
+
+.table > thead > tr > th > a {
+    color: black;
+}
+.table > thead > tr > th > a:hover, .table > thead > tr > th > a:focus {
+    text-decoration: none;
+    cursor: pointer;
+}
+.table .order {
+    color: #337ab7;
+}
+.table .order:hover, .table .order:focus, .table .order:hover, .table .order.active {
+    color: #d0564b;
+}
+
+/* enable absolute positioning */
+.inner-addon {
+    position: relative;
+}
+
+/* style icon */
+.inner-addon .glyphicon {
+    position: absolute;
+    padding: 10px;
+    pointer-events: none;
+}
+
+/* align icon */
+.left-addon .glyphicon  { left:  10px;}
+.right-addon .glyphicon { right: 10px;}
+
+/* add padding  */
+.left-addon input  { padding-left:  30px; }
+.right-addon input { padding-right: 30px; }
+
+.typeahead ul > li > a {
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+.dropdown .btn-group .btn-default, .dropup .btn-group .btn-default {
+    text-align: left;
+}
+
+.typeahead .dropdown-menu {
+    width: 100%;
+}
+
+.datepicker .dropdown-menu {
+    
+}
+.datepicker .dropdown-menu table {
+    margin: 5px;
+    border-spacing: 1px;
+    border-collapse: separate;
+    padding-top: 0px !important;
+}
+.datepicker .dropdown-menu {
+    overflow: hidden;
+    max-height: 350px !important;
+    left: 100% !important;
+    top: 0px !important;
+    margin-top: -180px;
+    margin-left: 20px;
+    max-width: 300px;
+}
+
+.datepicker td button {
+    padding: 10px;
+}
+
+.datepicker table tr td button.btn.btn-default:hover {
+    background-color: #337ab7;
+}
+
+.datepicker table tr td button.btn.btn-default .text-info:hover {
+    color: #ffffff;
+}
+
+.datepicker .btn.btn-default span:hover {
+    color: white;
+}
+
+.datepicker table tr td button.active {
+    background-color: #d0564b;
+}
+
+.datepicker table tr td button.active .text-info {
+    color: #ffffff;
+}
+
+.dropdown .dropdown-menu {
+    width: 100%;
+}
+
+.dropdown .btn.btn-default {
+    width: 100%
+}
+
+.dropdown .btn.btn-default:active, .dropdown .btn.btn-default:focus, .dropdown .btn.btn-default:hover {
+    background-color: transparent;
+}
+.dropdown .dropdown-menu > li > a:focus,.dropdown .dropdown-menu > li > a:hover {
+    background-color: #337ab7;
+    color: #ffffff;
+    cursor: pointer;
+}
+.alert {
+    background-color: lightcoral;
+    color: white;
+}
+
+.tbspace {
+    margin: 20px 0px;
+}
+
+.extend-label {
+    position: absolute;
+    margin: -11px 0px 0px 28px;
+    background: white none repeat scroll 0% 0%;
+}
+
+.adjust-width {
+    width: auto;
+}
+
+.form-inline .input-group {
+    width: 100%;
+}
+
+.dialog-header-confirm {
+    background: #337ab7;
+    color: #fff;
+    border-radius: 3px 3px 0px 0px;
+}
+
+.modal-body label {
+    font-weight: 500;
+}
+
+.modal-header a.close {
+    color: #fff;
+    opacity: .5;
+}
+
+.modal-header a.close:hover {
+    color: #fff;
+    opacity: .8;
+}
+
+.dropdown-menu > li > a:hover {
+    color: #fff;
+    text-decoration: none;
+    background-color: #337ab7;
+    outline: 0;
+}
+
+.modal-footer {
+    padding: 10px;
+}
+
+i.glyphicon.glyphicon-search.right-align {
+    right: -1px;
+}
+
+.multiselect-btn-span {
+    display: inline-block;
+    width: 95% !important;
+    white-space: normal;
+    font-weight: 500;
+    text-align: left;
+}
+
+
+.open .caret {
+    border-top-width: 0 !important;
+    border-bottom: 4px solid #000000 !important;
+}
+
+.form-control.readonly[readonly] {
+    background-color: #fff;
+    cursor: not-allowed;
+}

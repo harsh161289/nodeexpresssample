@@ -1,0 +1,37 @@
+<div class="cfl-modal">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="modal-header dialog-header-confirm">
+                <a class="close" data-ng-click="modalOptions.dismiss()">×</a>
+                <h4 class="modal-title">
+                    {{modalOptions.headerText}}
+                </h4>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="modal-body">
+                <div class="col-xs-12 form-horizontal">
+                    <div class="form-group">
+                        <label>{{modalOptions.bodyText}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="row">
+            <div data-ng-show="modalOptions.showSecondBtn" class="col-sm-offset-8 col-sm-2">
+                <button type="button" class="btn btn-block btn-default"
+                        data-ng-click="modalOptions.close();">{{modalOptions.secondActionButtonText}}
+                </button>
+            </div>
+            <div class="col-sm-2 pull-right">
+                <button type="button" class="btn btn-block btn-primary"
+                        data-ng-click="modalOptions.ok();">{{modalOptions.actionButtonText}}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

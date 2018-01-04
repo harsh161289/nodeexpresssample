@@ -1,0 +1,139 @@
+
+<script type="text/ng-template" id="group-template.html">
+	<div class="panel-heading">
+		<h4 class="panel-title" style="color:#fa39c3">
+			<a href tabindex="0" class="accordion-toggle" ng-click="toggleOpen()" uib-accordion-transclude="heading">
+				<span uib-accordion-header ng-class="{'text-muted': isDisabled}">
+				{{heading}}
+				</span>
+			</a>
+		</h4><!DOCTYPE html>
+		<html>
+			<head>
+				<title></title>
+			</head>
+			<body>
+
+			</body>
+		</html>
+	</div>
+    <div class="panel-collapse collapse" uib-collapse="!isOpen">
+      <div class="panel-body" style="text-align: right" ng-transclude></div>
+    </div>
+</script>
+<div class="col-md-12">
+	<div class="row firstrow">
+		<div class="col-md-12">
+			<div class="row">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">
+							<a href="javascript:void(0);" data-toggle="collapse"  ng-click="show=!show">
+							<i class="glyphicon glyphicon-chevron-right" ng-class="{'glyphicon-chevron-down': show}"></i>Extend Validity
+							</a>
+						</h3>
+					</div>
+					<div id="collapseOne" class="panel-collapse collapse" ng-class="{'in': show}">
+						<div class="panel-body">
+							<div class="row">
+								<form class="form-inline" name="validityExtenstionForm">
+									<div class="col-md-5">
+										<div class="row">
+											<label class="col-md-2 control-label">Contract</label>
+											<div class="col-md-8 inner-addon right-addon typeahead">
+							                    <i class="glyphicon glyphicon-search"></i>
+							                    <input name="contract" type="text" ng-model="searchContract"
+							                           placeholder="Name / FileNumber / BG Number"
+							                           uib-typeahead="contract.displayName for contract in searchForContract($viewValue)"
+							                           typeahead-on-select="selectedContract($item, $model, $label, $event)"
+							                           typeahead-loading="loading"
+							                           typeahead-no-results="noResults" class="form-control" required>
+							                    <div ng-show="noResults">No Results Found</div>
+							                    <span class="help-block form-hint"
+					                              ng-show="validityExtenstionForm.contract.$invalid && (validityExtenstionForm.contract.$dirty || isSubmitted)">
+					                            <span>Name of firm is required</span>
+					                        </span>
+							                </div>
+										</div>
+									</div>
+									<div class="col-md-5">
+										<div class="row datepicker"
+			                     ng-class="{'has-error': validityExtenstionForm.validityDate.$invalid && (validityExtenstionForm.validityDate.$dirty || isSubmitted)}">
+					                        <label class="col-md-2 adjust-width" for="validityDate">Validity Date</label>
+					                        <div class="col-md-8">
+					                        	<p class="input-group">
+						                            <input type="text" id="validityDate" name="validityDate" class="form-control"
+						                                   show-button-bar="false"
+						                                   uib-datepicker-popup="d/MM/yyyy"
+						                                   datepicker-options="dateOptions"
+						                                   is-open="opened"
+						                                   ng-model="validityDate" ng-required="true"
+						                                   placeholder="DD/MM/YYYY" close-text="Close" />
+						                            <span class="input-group-btn">
+						                                <button type="button" class="btn btn-default" ng-click="openCalender()"><i class="glyphicon glyphicon-calendar"></i></button>
+						                            </span>
+						                        </p>
+						                        <span class="help-block form-hint"
+						                              ng-show="validityExtenstionForm.validityDate.$invalid && (validityExtenstionForm.validityDate.$dirty || isSubmitted)">
+						                            <span>Date is required</span>
+						                        </span>
+					                        </div>
+					                        
+					                    </div>
+									</div>
+									<div class="col-md-2">
+										<div class="row">
+											<div class="col-md-6">
+												<button type="button" class="btn btn-default" ng-click="cancel();">Cancel</button>
+											</div>
+											<div class="col-md-6">
+												<button type="button" class="btn btn-primary" ng-click="extendValidity();">Update</button>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row table-container">
+		<table class="table data-table">
+			<thead>
+				<tr>
+					<th ng-repeat="field in contractDetailsField">{{field.displayName}}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-show="contractDetails.length" ng-repeat="details in contractDetails" ng-class="{ 'alert': (details.type==='EXTEND' || details.type==='ENCASH')}" >
+					<td><a href="javascript:void(0);" ng-click="editContract(details)">{{details.id}}</a></td>
+					<td>{{details.caNumberAndNameOfWork}}</td>
+					<td>{{details.fileNumber}}</td>
+					<td>{{details.contractor.nameOfFirm}}</td>
+					<td>{{getTypeOfBG(details.typeOfBG)}}</td>
+					<td>{{details.amountOfBG}}</td>
+					<td>{{details.bgNumber}}</td>
+					<td>{{details.validityDate | date: 'dd/MM/yyyy'}}</td>
+					<td>{{details.bank.bankName}} {{details.bank.city}} {{details.bank.address}}</td>
+					<td>
+						<a ng-show="!details.reminderSentOn && details.type==='EXTEND'" href="javascript:void(0);"" ng-click="sendMail(details)">Send Extension Mail</a>
+						<span ng-show="details.reminderSentOn">{{details.reminderSentOn | date: 'dd/MM/yyyy'}}</span>
+					</td>
+					<td>{{details.reminderToBankStatus | evalBoolean}}</td>
+					
+					<td>
+						<a ng-show="!details.encashmentSentOn && details.type==='ENCASH'" href="javascript:void(0);"" ng-click="sendMail(details)">Send Encashment Mail</a>
+						<span ng-show="details.encashmentSentOn">{{details.encashmentSentOn | date: 'dd/MM/yyyy'}}</span>
+					</td>
+					<td>{{details.encashmentToBankStatus | evalBoolean}}</td>
+					<td>{{details.remarks}}</td>
+				</tr>
+				<tr ng-show="!contractDetails.length">
+					<td colspan="4">No records found</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

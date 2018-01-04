@@ -1,0 +1,211 @@
+<div class="col-md-12">
+    <div class="row ">
+        <div class="col-md-4">
+            <form name="contractDetailsForm" class="form-horizontal" novalidate>
+                <div class="col-md-12">
+                    <div class="form-group"
+                         ng-class="{'has-error': contractDetailsForm.caNumber.$invalid && (contractDetailsForm.caNumber.$dirty || isSubmitted)}">
+                        <label for="caNumber">CA. No. & Name Of Work*</label>
+                        <input type="text" class="form-control" id="caNumber" name="caNumber"
+                               ng-model="contract.caNumberAndNameOfWork" required/>
+                        <span class="help-block form-hint"
+                              ng-show="contractDetailsForm.caNumber.$invalid && (contractDetailsForm.caNumber.$dirty || isSubmitted)">
+                            <span>Details are required</span>
+                        </span>
+                    </div>
+                    <div class="form-group"
+                         ng-class="{'has-error': contractDetailsForm.fileNumber.$invalid && (contractDetailsForm.fileNumber.$dirty || isSubmitted)}">
+                        <label for="fileNumber">File Number*</label>
+                        <input type="text" class="form-control" id="fileNumber" name="fileNumber"
+                               ng-model="contract.fileNumber" required/>
+                        <span class="help-block form-hint"
+                              ng-show="contractDetailsForm.fileNumber.$invalid && (contractDetailsForm.fileNumber.$dirty || isSubmitted)">
+                            <span>File details is required</span>
+                        </span>
+                    </div>
+                    <div class="form-group"
+                         ng-class="{'has-error': contractDetailsForm.contractor.$invalid && (contractDetailsForm.contractor.$dirty || isSubmitted)}">
+                        <label for="contractor">Name Of Firm*</label>
+                        <div class="inner-addon right-addon typeahead">
+                            <i class="glyphicon glyphicon-search right-align"></i>
+                            <input id="contractor" name="contractor" type="text" ng-model="contractorSearch"
+                                   placeholder="Name / city/ registration no."
+                                   uib-typeahead="contractor.displayName for contractor in searchForContractor($viewValue)"
+                                   typeahead-on-select="selectedContractor($item, $model, $label, $event)"
+                                   typeahead-loading="loading"
+                                   typeahead-no-results="noResults" class="form-control" ng-blur="validateForm();" required>
+                            <div ng-show="noResults">No Results Found</div>
+                        </div>
+                        <span class="help-block form-hint"
+                              ng-show="contractDetailsForm.contractor.$invalid && (contractDetailsForm.contractor.$dirty || isSubmitted)">
+                            <div ng-repeat="(errorType, value) in contractDetailsForm.contractor.$error">
+                                <span ng-if="errorType==='required'">Name of firm is required</span>
+                                <span ng-if="errorType==='not-valid'">Not a valid contractor</span>
+                            </div> 
+                        </span>
+                    </div>
+                    <div class="form-group"
+                         ng-class="{'has-error': contractDetailsForm.typeOfBG.$invalid && (contractDetailsForm.typeOfBG.$dirty || isSubmitted)}">
+                        <label for="bgNumber">Type Of BG*</label>
+                        <input type="hidden" class="form-control" id="typeOfBG" name="typeOfBG"
+                               ng-model="contract.typeOfBG" required/>
+                        <div class="dropdown" uib-dropdown>
+                            <button id="single-button" type="button" class=" form-control btn btn-default" uib-dropdown-toggle>
+                                <span class="multiselect-btn-span">{{contract.typeOfBG? getTypeOfBG(contract.typeOfBG) : "Select BG type"}}</span>
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                                <li ng-class="{'active' : contract.typeOfBG === key }" ng-click="contract.typeOfBG = key" ng-repeat="(key, value) in typesOfBG"><a>{{getTypeOfBG(key)}}</a></li>
+                            </ul>
+                        </div>
+                        <span class="help-block form-hint"
+                              ng-show="contractDetailsForm.typeOfBG.$invalid && (contractDetailsForm.typeOfBG.$dirty || isSubmitted)">
+                            <span>BG type is required</span>
+                        </span>
+                    </div>
+                    <div class="form-group"
+                         ng-class="{'has-error': contractDetailsForm.amount.$invalid && (contractDetailsForm.amount.$dirty || isSubmitted)}">
+                        <label for="amount">Amount*</label>
+                        <input type="text" class="form-control" id="amount" name="amount" ng-model="contract.amountOfBG"
+                               required/>
+                        <span class="help-block form-hint"
+                              ng-show="contractDetailsForm.amount.$invalid && (contractDetailsForm.amount.$dirty || isSubmitted)">
+                            <span>Amount is required</span>
+                        </span>
+                    </div>
+                    <div class="form-group"
+                         ng-class="{'has-error': contractDetailsForm.bgNumber.$invalid && (contractDetailsForm.bgNumber.$dirty || isSubmitted)}">
+                        <label for="bgNumber">BG Number*</label>
+                        <input type="text" class="form-control" id="bgNumber" name="bgNumber"
+                               ng-model="contract.bgNumber" required/>
+                        <span class="help-block form-hint"
+                              ng-show="contractDetailsForm.bgNumber.$invalid && (contractDetailsForm.bgNumber.$dirty || isSubmitted)">
+                            <span>Number is required</span>
+                        </span>
+                    </div>
+                    <div class="form-group datepicker"
+                         ng-class="{'has-error': contractDetailsForm.validityDate.$invalid && (contractDetailsForm.validityDate.$dirty || isSubmitted)}">
+                        <label for="validityDate">Validity Date(DD/MM/YYYY)*</label>
+                        <p class="input-group">
+                            <input type="text" id="validityDate" name="validityDate" class="form-control readonly"
+                                   show-button-bar="false"
+                                   uib-datepicker-popup="dd/MM/yyyy"
+                                   datepicker-options="dateOptions"
+                                   is-open="opened"
+                                   ng-click="openCalender();"
+                                   ng-model="contract.validityDate" ng-required="true" close-text="Close" readonly/>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="openCalender()"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </p>
+                        <span class="help-block form-hint"
+                              ng-show="contractDetailsForm.validityDate.$invalid && (contractDetailsForm.validityDate.$dirty || isSubmitted)">
+                            <span>Date is required</span>
+                        </span>
+                    </div>
+                    <div class="form-group"
+                         ng-class="{'has-error': contractDetailsForm.bank.$invalid && (contractDetailsForm.bank.$dirty || isSubmitted)}">
+                        <label for="bank">Bank*</label>
+                        <div class="inner-addon right-addon typeahead">
+                            <i class="glyphicon glyphicon-search"></i>
+                            <input id="bank" name="bank" type="text" ng-model="bankSearchText"
+                                   placeholder="BankName / IFSC no. / City"
+                                   uib-typeahead="bank.displayName for bank in searchForBank($viewValue)"
+                                   typeahead-on-select="selectedBank($item, $model, $label, $event)"
+                                   typeahead-loading="loading"
+                                   typeahead-no-results="noBanks" class="form-control" ng-blur="validateForm();" required>
+                            <div ng-show="noBanks">No Results Found</div>
+                        </div>
+                        <span class="help-block form-hint"
+                              ng-show="contractDetailsForm.bank.$invalid && (contractDetailsForm.bank.$dirty || isSubmitted)">
+                            <div ng-repeat="(errorType, value) in contractDetailsForm.bank.$error">
+                                <span ng-if="errorType==='required'">Name of firm is required</span>
+                                <span ng-if="errorType==='not-valid'">Not a valid bank</span>
+                            </div> 
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label for="remarks">Remarks</label>
+                        <textarea type="text" class="form-control" id="remarks" name="remarks"
+                                  ng-model="contract.remarks"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-6">
+                            <button class="btn btn-default" type="button" ng-click="cancel();">Cancel</button>
+                            <button class="btn btn-primary" type="button" ng-show="!contract.id" ng-click="submit();">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-8">
+            <h1>Contract Details</h1>
+            <div class="row">
+                <div class="col-md-8 custom-pagination">
+                    <div class="col-md-offset-3 col-md-3">
+                        <div type="button" class="btn btn-default dropdown-toggle pagination-btn">
+                            <a href="" ng-class="{'active': query.page != 1}" ng-click="gotoPage(query.page - 1);">
+                                &#x025C4;&ensp;</a>
+                            <span>{{query.page}} of {{totalPages}} </span>
+                            <a href="" ng-class="{'active': query.page < totalPages}"
+                               ng-click="gotoPage(query.page + 1);">&ensp;&#x025BA;</a>
+                        </div>
+                    </div>
+                    <div class="leftmargin width-inline">
+                        show
+                    </div>
+                    <div class="width-inline">
+                        <div class="btn-group btn-input">
+                            <button type="button" class="btn btn-default dropdown-toggle page-btn"
+                                    data-toggle="dropdown">
+                                <span data-bind="label">{{query.pageSize}}</span> <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li ng-repeat="pageSize in pageSizes" ng-click="resetPageSize(pageSize)">
+                                    <a>{{pageSize}}</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="width-inline"> of {{totalRecords}}
+                        <span ng-show="totalRecords > 1">results</span>
+                        <span ng-show="totalRecords == 1">result</span>
+                    </div>
+                </div>
+                <div class="col-md-4 inner-addon right-addon">
+                    <div class="form-group">
+                        <i class="glyphicon glyphicon-search"></i>
+                        <input type="text" ng-model="searchContract" placeholder="Name / fileNumber/ BG no."
+                               uib-typeahead="contract.displayName for contract in searchForContract($viewValue)"
+                               typeahead-no-results="noResults" class="form-control">
+                    </div>         
+                </div>
+            </div>
+            <div class="row table-container">
+                <table class="table data-table">
+                    <thead>
+                        <tr>
+                            <th ng-repeat="field in contractFields">{{field.displayName}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="contract in contracts track by $index">
+                            <td><a href="javascript:void(0);" ng-click="editContract(contract);">{{contract.id}}</a></td>
+                            <td>{{contract.caNumberAndNameOfWork}}</td>
+                            <td>{{contract.fileNumber}}</td>
+                            <td>{{contract.contractor.nameOfFirm}}</td>
+                            <td>{{contract.typeOfBG}}</td>
+                            <td>{{contract.amountOfBG}}</td>
+                            <td>{{contract.bgNumber}}</td>
+                            <td>{{contract.validityDate | date: 'dd MMMM yyyy'}}</td>
+                            <td>{{contract.bank.bankName}}, {{contract.bank.city}},{{contract.bank.state}}</td>
+                            <td>{{contract.remarks}}</td>
+                        </tr>
+                        <tr ng-if="!contracts.length">
+                            <td colspan="4">No record found</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
