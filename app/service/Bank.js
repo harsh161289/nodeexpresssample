@@ -4,11 +4,11 @@ const Bank = require('../models/bank');
 const CONFIG = require('../config/config');
 
 var defaultParams = {
-		page: 1,
-		pageSize: 10,
-		sort: 'modifiedOn',
-		order: 'desc'
-	};
+	page: 1,
+	pageSize: 10,
+	sort: 'modifiedOn',
+	order: 'desc'
+};
 
 var calculateOffset = (param) => {
 	var params = Object.assign({}, defaultParams, param);

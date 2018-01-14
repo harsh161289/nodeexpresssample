@@ -6,7 +6,14 @@ Sample application build to perform CRUD operations, send out mails using nodema
 	AngularJs 1.5
 
 ## Getting started
-Clone the repository and navigate to folder using terminal and type the following to start application
+Clone the repository and navigate and type the following commands
+1. Apply migration changes present under app->migration files
+```
+	knex migrate:latest
+```
+
+
+2. Run application
 ```
 	npn run start
 ```
