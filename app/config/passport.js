@@ -1,10 +1,8 @@
 'use strict';
 
 const _localStrategy = require('passport-local').Strategy;
-var UserServiceFn = require('../service/user')
-var UserService = new UserServiceFn();
-console.log("UserService");
-console.log(UserService);
+var UserService = require('../service/user')();
+
 module.exports = function(passport) {
 	passport.use(new _localStrategy(
 		function(username, password, done) {

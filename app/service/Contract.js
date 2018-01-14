@@ -77,9 +77,9 @@ var defaultParams = {
 	findAny = (param) => {
 		return Contracts.query((qb) => {
 			qb.where('caNumberAndNameOfWork', 'LIKE', '%' + param.searchTxt + '%')
-			.orWhere('fileNumber', 'LIKE', '%' + param.searchTxt + '%')
-			.orWhere('bgNumber', 'LIKE', '%' + param.searchTxt + '%')
-			.andWhere('owner', '=', param.owner);
+				.orWhere('fileNumber', 'LIKE', '%' + param.searchTxt + '%')
+				.orWhere('bgNumber', 'LIKE', '%' + param.searchTxt + '%')
+				.andWhere('owner', '=', param.owner);
 		}).fetch({
 			columns: CONFIG.FETCH_CONTRACTS
 		});
@@ -88,9 +88,9 @@ var defaultParams = {
 		var params = calculateOffset(param);
 		return Contracts.query((qb) => {
 			qb.where('owner', param.owner)
-			.orderBy(params.sort, params.order)
-			.limit(params.pageSize)
-			.offset(params.offset);
+				.orderBy(params.sort, params.order)
+				.limit(params.pageSize)
+				.offset(params.offset);
 		}).fetch({
 			columns: CONFIG.FETCH_CONTRACTS,
 			withRelated: ['bank', 'contractor']
@@ -99,7 +99,7 @@ var defaultParams = {
 	retrieveCount = (params) => {
 		return Contracts.query((qb) => {
 			qb.where('owner', params.owner)
-			.orderBy(params.sort, params.order);
+				.orderBy(params.sort, params.order);
 		}).count('id');
 	},
 	save = (model) => {
@@ -107,28 +107,28 @@ var defaultParams = {
 	},
 	extendValidity = (id, model) => {
 		return findById(id)
-		.then((contract) => {
-			if (!contract) {
-				throw new Error('contract doesnot exist for id:' + id);
-			}
-			return updateHistory(id, contract.get('validityDate'), {
-				owner: model.modifiedBy,
-				createdOn: model.modifiedOn
+			.then((contract) => {
+				if (!contract) {
+					throw new Error('contract doesnot exist for id:' + id);
+				}
+				return updateHistory(id, contract.get('validityDate'), {
+					owner: model.modifiedBy,
+					createdOn: model.modifiedOn
+				});
+			}).then(() => {
+				return updateContract(id, {
+					validityDate: model.validityDate,
+					modifiedOn: _moment().format(CONFIG.DATETIME_FORMAT),
+					modifiedBy: model.owner,
+					reminderToBankStatus: false,
+					encashmentToBankStatus: false
+				});
 			});
-		}).then(() => {
-			return updateContract(id, {
-				validityDate: model.validityDate,
-				modifiedOn: _moment().format(CONFIG.DATETIME_FORMAT),
-				modifiedBy: model.owner,
-				reminderToBankStatus: false,
-				encashmentToBankStatus: false
-			});
-		});
 	},
 	findByContractExpiry = (param) => {
 		return Contracts.query((qb) => {
 			qb.where('owner', param.owner)
-			.whereBetween('validityDate', [_moment().format(CONFIG.LOCALDATE_FORMAT), _moment().add(60, 'day').format(CONFIG.LOCALDATE_FORMAT)]);
+				.whereBetween('validityDate', [_moment().format(CONFIG.LOCALDATE_FORMAT), _moment().add(60, 'day').format(CONFIG.LOCALDATE_FORMAT)]);
 		}).fetch({
 			columns: CONFIG.FETCH_CONTRACTS_DETAILS,
 			withRelated: ['bank', 'contractor']
@@ -151,10 +151,10 @@ module.exports = function ContractService(optns) {
 
 		// updates the contract validity date and moves the old validity to validity history table
 		extendValidity: extendValidity,
-		
+
 		// find contracts whose validity is about to expire in next 30 days
 		findByContractExpiry: findByContractExpiry,
-		
+
 		// send an email notification to contract emailId followed by updates to contract status
 		sendNotification: (id, params) => {
 			var formattedMessage = getHtmlTemplate(params.type.toLowerCase());
@@ -163,32 +163,32 @@ module.exports = function ContractService(optns) {
 				if (isValid) {
 					// send email
 					return EmailService.sendMail(CONFIG.MAIL_FROM, contract.related('contractor').get('emailId'), params.type, formattedMessage({
-						type: params.type.toLowerCase(),
-						fileNumber: contract.get('fileNumber'),
-						bgNumber: contract.get('bgNumber'),
-						validityDate: _moment(contract.get('validityDate')).format(CONFIG.LOCALDATE_FORMAT).toString(),
-						caNumberAndNameOfWork: contract.get('caNumberAndNameOfWork')
-					}))
-					.then(() => {
-						var updateParams;
-						if ('ENCASH' === params.type) {
-							updateParams = Object.assign({}, params, {
-								encashmentToBankStatus: true,
-								encashmentSentOn: _moment().format(CONFIG.DATETIME_FORMAT)
-							});
-						} else if ('EXTEND' === params.type) {
-							updateParams = Object.assign({}, params, {
-								reminderToBankStatus: true,
-								reminderSentOn: _moment().format(CONFIG.DATETIME_FORMAT),
-							});
-						}
-						delete updateParams.type;
-						return updateContract(id, updateParams);
-					})
-					.catch((err) => {
-						Logger.error(err);
-						throw new Error('EMAIL_ERROR');
-					});
+							type: params.type.toLowerCase(),
+							fileNumber: contract.get('fileNumber'),
+							bgNumber: contract.get('bgNumber'),
+							validityDate: _moment(contract.get('validityDate')).format(CONFIG.LOCALDATE_FORMAT).toString(),
+							caNumberAndNameOfWork: contract.get('caNumberAndNameOfWork')
+						}))
+						.then(() => {
+							var updateParams;
+							if ('ENCASH' === params.type) {
+								updateParams = Object.assign({}, params, {
+									encashmentToBankStatus: true,
+									encashmentSentOn: _moment().format(CONFIG.DATETIME_FORMAT)
+								});
+							} else if ('EXTEND' === params.type) {
+								updateParams = Object.assign({}, params, {
+									reminderToBankStatus: true,
+									reminderSentOn: _moment().format(CONFIG.DATETIME_FORMAT),
+								});
+							}
+							delete updateParams.type;
+							return updateContract(id, updateParams);
+						})
+						.catch((err) => {
+							Logger.error(err);
+							throw new Error('EMAIL_ERROR');
+						});
 				}
 			});
 		}
